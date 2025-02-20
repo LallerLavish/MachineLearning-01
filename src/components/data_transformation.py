@@ -43,7 +43,7 @@ class Data_transform:
             cat_pipeline=Pipeline(
                 steps=[
                     ("impute",SimpleImputer(strategy="most_frequent")),
-                    ("encoder", OneHotEncoder(handle_unknown="ignore", sparse_output=False))
+                    ("encoder", OneHotEncoder(sparse_output=False))
                 ]
             )
 
@@ -83,9 +83,8 @@ class Data_transform:
             test_transformed_data=preprocessor.transform(input_test_df)
             
             ## concatenation
-            train_arr=np.c_[input_train_df,np.array(target_train_df)]
-            test_arr=np.c_[input_test_df,np.array(target_test_df)]
-
+            train_arr=np.c_[train_transformed_data,np.array(target_train_df)]
+            test_arr=np.c_[test_transformed_data,np.array(target_test_df)]
             logging.info("saving preprocessing object...... Done..")
 
             save_object(
