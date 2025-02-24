@@ -23,6 +23,9 @@ class DataIngestion:
         logging.info("Data Ingestion Process has begin")
         try:
             df=pd.read_csv("notebook/data/new_Stud.csv")
+           
+            df2=df.drop(['Unnamed: 0','average','total_score'],axis=1)
+           
             logging.info("Reading the Dataset")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
@@ -31,7 +34,7 @@ class DataIngestion:
 
             logging.info("Data Spliting Has initialized")
 
-            train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
+            train_set,test_set=train_test_split(df2,test_size=0.2,random_state=42)
 
             train_set.to_csv(self.ingestion_config.train_data_path,index=False)
             test_set.to_csv(self.ingestion_config.test_data_path,index=False)

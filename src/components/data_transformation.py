@@ -25,7 +25,7 @@ class Data_transform:
 
     def data_transformer(self):
         try:
-            numerical_columns=["math_score","reading_score","writing_score"]
+            numerical_columns=["reading_score","writing_score"]
             categorical_columns=[
                 "gender",
                 "race_ethnicity",
@@ -66,15 +66,19 @@ class Data_transform:
         try:
             train_data=pd.read_csv(train_path)
             test_data=pd.read_csv(test_path)
-            train_data.drop('total_score',axis=1,inplace=True)
-            test_data.drop('total_score',axis=1,inplace=True)
+    
             logging.info("Reading of test and train data is completed")
             logging.info("fetching the preprocessor object")
+
             preprocessor=self.data_transformer()
+
             logging.info("preprocessor object is fetched")
-            target_col="average"
+
+            target_col="math_score"
             logging.info("Spliting train and test data into input and target section")
+
             input_train_df=train_data.drop(target_col,axis=1)
+            
             target_train_df=train_data[target_col]
 
             input_test_df=test_data.drop(target_col,axis=1)
